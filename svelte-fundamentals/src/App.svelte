@@ -9,6 +9,9 @@
     profileSummary: string;
     country: string;
     jobLocations: string[];
+    remoteWork: boolean;
+    skills: string[];
+    experience: string;
   }
 
   const formValues: IFormValues = {
@@ -17,7 +20,12 @@
     profileSummary: '',
     country: '',
     jobLocations: [],
+    remoteWork: false,
+    skills: [],
+    experience: '',
   };
+
+  const handleSubmit = (e: SubmitEvent) => console.log(formValues);
 </script>
 
 <main>
@@ -30,7 +38,7 @@
     {JSON.stringify(formValues)}
   </div>
   <div>
-    <form>
+    <form on:submit|preventDefault={handleSubmit}>
       <div>
         <label for="name">Name</label>
         <input type="text" id="name" bind:value={formValues.name} />
@@ -60,6 +68,70 @@
           <option value="LA">Lào</option>
         </select>
       </div>
+      <div>
+        <label for="remoteJob">Remote job</label>
+        <input
+          id="remoteJob"
+          type="checkbox"
+          bind:checked={formValues.remoteWork}
+        />
+      </div>
+      <div>
+        Skills:
+        <input
+          type="checkbox"
+          id="html"
+          value="html"
+          bind:group={formValues.skills}
+        />
+        <label for="html">HTML</label>
+        <input
+          type="checkbox"
+          id="css"
+          value="css"
+          bind:group={formValues.skills}
+        />
+        <label for="css">CSS</label>
+        <input
+          type="checkbox"
+          id="javascript"
+          value="javascript"
+          bind:group={formValues.skills}
+        />
+        <label for="javascript">JavaScript</label>
+      </div>
+      <div>
+        Years of experience
+        <input
+          type="radio"
+          id="0"
+          value="0"
+          bind:group={formValues.experience}
+        />
+        <label for="0">0</label>
+        <input
+          type="radio"
+          id="1-3"
+          value="1-3"
+          bind:group={formValues.experience}
+        />
+        <label for="1-3">1-3</label>
+        <input
+          type="radio"
+          id="3-6"
+          value="3-6"
+          bind:group={formValues.experience}
+        />
+        <label for="3-6">3-6</label>
+        <input
+          type="radio"
+          id="6+"
+          value="6+"
+          bind:group={formValues.experience}
+        />
+        <label for="6+">6+</label>
+      </div>
+      <div><button type="submit">Submit</button></div>
     </form>
   </div>
 </main>
