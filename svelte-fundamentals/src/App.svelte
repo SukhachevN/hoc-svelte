@@ -1,35 +1,77 @@
 <script lang="ts">
-  let count = 0;
+  // let count = 0;
 
-  const handleClick = (diff: number) => (count += diff);
+  // const handleClick = (diff: number) => (count += diff);
 
-  interface IFormValues {
-    name: string;
-    age: number | null;
-    profileSummary: string;
-    country: string;
-    jobLocations: string[];
-    remoteWork: boolean;
-    skills: string[];
-    experience: string;
+  // interface IFormValues {
+  //   name: string;
+  //   age: number | null;
+  //   profileSummary: string;
+  //   country: string;
+  //   jobLocations: string[];
+  //   remoteWork: boolean;
+  //   skills: string[];
+  //   experience: string;
+  // }
+
+  // const formValues: IFormValues = {
+  //   name: '',
+  //   age: null,
+  //   profileSummary: '',
+  //   country: '',
+  //   jobLocations: [],
+  //   remoteWork: false,
+  //   skills: [],
+  //   experience: '',
+  // };
+
+  // const handleSubmit = (e: SubmitEvent) => console.log(formValues);
+  let firstName = 'Nikita';
+  let lastName = 'Pham';
+  $: fullName = `${firstName} ${lastName}`;
+
+  interface Item {
+    id: number;
+    title: string;
+    price: number;
   }
 
-  const formValues: IFormValues = {
-    name: '',
-    age: null,
-    profileSummary: '',
-    country: '',
-    jobLocations: [],
-    remoteWork: false,
-    skills: [],
-    experience: '',
-  };
+  let items: Item[] = [
+    { id: 1, title: 'TV', price: 100 },
+    { id: 2, title: 'phone', price: 200 },
+    { id: 3, title: 'laptop', price: 300 },
+  ];
 
-  const handleSubmit = (e: SubmitEvent) => console.log(formValues);
+  $: total = items.reduce((sum, { price }) => (sum += price), 0);
+  let notReactiveTotal = items.reduce((sum, { price }) => (sum += price), 0);
+
+  $: {
+    const greet = `Fullname is ${firstName} ${lastName}`;
+    console.log(greet);
+  }
+
+  let volume = 0;
+
+  $: if (volume < 0) {
+    alert('min volume');
+    volume = 0;
+  } else if (volume > 20) {
+    alert('max volume');
+    volume = 20;
+  }
 </script>
 
 <main>
-  <div>
+  <h2>{firstName} {lastName}</h2>
+  <h2>{fullName}</h2>
+  <h2>Total - {total}</h2>
+  <h2>not reactive total - {notReactiveTotal}</h2>
+  <button on:click={() => (items[0].price += 100)}>change item price</button>
+  <button on:click={() => (firstName = 'Binh')}>change Name</button>
+  <h2>Volume = {volume}</h2>
+  <button on:click={() => volume++}>Increase volume</button>
+  <button on:click={() => volume--}>Decrease volume</button>
+  <!-- <div>
     <button on:click={() => handleClick(-1)}>decrease count {count}</button>
     <button on:click={() => handleClick(1)}> increase count {count}</button>
     <button on:click={(e) => console.log(e)}>show type</button>
@@ -133,7 +175,7 @@
       </div>
       <div><button type="submit">Submit</button></div>
     </form>
-  </div>
+  </div> -->
 </main>
 
 <style>
